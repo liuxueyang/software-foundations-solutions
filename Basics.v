@@ -186,14 +186,11 @@ Proof.
 Qed.
 
 Module Playground2.
-
   Fixpoint plus (n: nat) (m: nat) :nat :=
     match n with
     | O => m
     | S n'=> S (plus n' m)
     end.
-
-  Compute (plus 3 2).
 
   Fixpoint mult (n m: nat) :nat :=
     match n with
@@ -215,7 +212,6 @@ Module Playground2.
     end.
 
 End Playground2.
-
 
 Fixpoint exp (base power: nat) :nat :=
   match power with
@@ -255,9 +251,11 @@ Qed.
 
 Theorem plus_n_O: forall n: nat, n = n + O.
 Proof.
-  intros n.
-  simpl.
-Abort.
+  intros.
+  induction n.
+  - reflexivity.
+  - simpl. rewrite <- IHn. reflexivity.
+Qed.
 
 Theorem plus_id_example: forall n m:nat, n = m -> n + n = m + m.
 Proof.
@@ -328,9 +326,10 @@ Fixpoint blt_nat (n m: nat): bool :=
 
 Theorem plus_1_neq_0_firsttry: forall n: nat, beq_nat (n + 1) 0 = false.
 Proof.
-  intros n.
-  simpl.
-Abort.
+  intros [].
+  - reflexivity.
+  - reflexivity.
+Qed.
 
 Theorem plus_1_neq_0: forall n:nat, beq_nat (n + 1) 0 = false.
 Proof.
@@ -349,8 +348,6 @@ Proof.
   - reflexivity.
   - reflexivity.
 Qed.
-
-
 
 Theorem andb_commutative: forall b c, andb b c = andb c b.
 Proof.
@@ -414,11 +411,11 @@ Qed.
 
 Theorem andb_true_elim2: forall b c: bool, andb b c = true -> c = true.
 Proof.
-  intros b c H.
-  destruct b.
-  destruct c.
-  reflexivity.
-  Abort.
+  intros.
+  induction b.
+  - simpl in H. apply H.
+  - inversion H.
+Qed.
 
 Theorem zero_nbeq_plus_1: forall n:nat, beq_nat 0 (n + 1) = false.
 Proof.
