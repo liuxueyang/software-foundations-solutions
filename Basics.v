@@ -18,10 +18,6 @@ Definition next_weekday(d: day) : day :=
   | sunday => monday
   end.
 
-Compute (next_weekday friday).
-
-Compute (next_weekday (next_weekday saturday)).
-
 Example test_next_weekday:
   (next_weekday (next_weekday saturday)) = tuesday.
 Proof.
@@ -147,12 +143,6 @@ Proof.
   reflexivity.
 Qed.
 
-Check true.
-
-Check (negb true).
-
-Check negb.
-
 Module Playground1.
   Inductive nat: Type :=
   | O : nat
@@ -172,14 +162,6 @@ Definition minustwo (n: nat) :nat :=
   | S O => O
   | S (S n') => n'
   end.
-
-Check (S (S (S (S O)))).
-
-Compute (minustwo 4).
-
-Check S.
-Check pred.
-Check minustwo.
 
 Fixpoint evenb (n: nat) :bool:=
   match n with
@@ -344,10 +326,6 @@ Fixpoint blt_nat (n m: nat): bool :=
             end
   end.
 
-  
-
-  
-
 Theorem plus_1_neq_0_firsttry: forall n: nat, beq_nat (n + 1) 0 = false.
 Proof.
   intros n.
@@ -472,8 +450,7 @@ Qed.
 Theorem andb_eq_orb:
   forall (b c: bool), (andb b c = orb b c) -> b = c.
 Proof.
-  intros b c.
-  destruct b as [|b'].
+  intros [] c.
   - simpl.
     intros H.
     rewrite -> H.
@@ -483,6 +460,3 @@ Proof.
     rewrite -> H.
     reflexivity.
 Qed.
-
-
-  
