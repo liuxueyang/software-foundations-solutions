@@ -204,6 +204,7 @@ Module Type NatPlayground2.
     end.
 
   Compute (mult 2 3).
+  Compute (mult 1 101).
 
   Example test_mult1 : (mult 3 2) = 6.
   Proof. simpl. reflexivity. Qed.
@@ -300,4 +301,80 @@ Proof. simpl. reflexivity. Qed.
 
 Example test_blt_nat3 : (blt_nat 4 2) = false.
 Proof. simpl. reflexivity. Qed.
+
+(* ==================== *)
+(* Proof by Simplification *)
+(* ==================== *)
+
+Theorem plus_O_n : forall n : nat, 0 + n = n.
+Proof.
+  intros n. simpl. reflexivity. Qed.
+
+Theorem plus_1_l : forall n : nat, 1 + n = S n.
+Proof.
+  intros n. simpl. reflexivity. Qed.
+
+Theorem mult_0_l : forall n : nat, 0 * n = 0.
+Proof.
+  intros n. simpl. reflexivity. Qed.
+
+(* TODO ??? *)
+(* Theorem mult_1_l : forall n : nat, 1 * n = n. *)
+(* Proof. *)
+(*   intros n. reflexivity. Qed. *)
+
+(* Theorem plus_n_O : forall n : nat, n = n + 0. *)
+(* Proof. *)
+(*   intros n. simpl. reflexivity. *)
+
+(* ==================== *)
+(* Proof by Rewriting *)
+(* ==================== *)
+
+Theorem plus_id_example : forall n m : nat,
+    n = m -> n + n = m + m.
+
+Proof.
+  intros n m.
+  intros H.
+  rewrite <- H.
+  reflexivity. Qed.
+
+(* Exercise: 1 star (plus_id_exercise) *)
+Theorem plus_id_exercise : forall n m o : nat,
+    n = m -> m = o -> n + m = m + o.
+
+Proof.
+  intros n m o.
+  intros H H1.
+  rewrite -> H.
+  rewrite <- H1.
+  reflexivity. Qed.
+
+Theorem mult_O_plus : forall n m : nat,
+    (0 + n) * m = n * m.
+
+Proof.
+  intros n m.
+  rewrite plus_O_n.
+  reflexivity. Qed.
+
+(* Exercise: 2 stars (mult_S_1) *)
+Theorem mult_S_l : forall n m : nat,
+    m = S n ->
+    m * (1 + n) = m * m.
+
+Proof.
+  intros n m.
+  intros H.
+  rewrite -> plus_1_l.
+  rewrite <- H.
+  reflexivity. Qed.
+
+(* ==================== *)
+(* Proof by Case Analysis *)
+(* ==================== *)
+
+Theorem plus_1_neq_O : forall n : nat,
+    beq_nat (n + 1) 0 = false.
 
