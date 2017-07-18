@@ -1,5 +1,5 @@
 # software-foundations-solutions
-Solutions for Software Foundations the book
+Solutions for [Software Foundations](https://softwarefoundations.cis.upenn.edu/current/index.html) the book
 
 ## Usage
 

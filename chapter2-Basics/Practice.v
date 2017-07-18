@@ -231,3 +231,73 @@ Compute (exp 3 0).
 Compute (exp 0 10).
 
 (* Exercise: 1 star (fractorial) *)
+
+(* 2017年07月17日 星期一 21时51分39秒 *)
+
+Fixpoint factorial (n : nat) : nat :=
+  match n with
+  | O => S O
+  | S n' => mult n (factorial n')
+  end.
+
+Compute (factorial 5).
+
+Example test_factorial1 : (factorial 3) = 6.
+Proof. simpl. reflexivity. Qed.
+
+Example test_factorial2 : (factorial 5) = 120.
+Proof. simpl. reflexivity. Qed.
+
+Notation "x + y" := (plus x y)
+                      (at level 50, left associativity)
+                    : nat_scope.
+
+Notation "x - y" := (minus x y)
+                      (at level 50, left associativity)
+                    : nat_scope.
+
+Notation "x * y" := (mult x y)
+                      (at level 40, left associativity)
+                    : nat_scope.
+
+Check ((2 + 3) * 4).
+
+Fixpoint beq_nat (n m : nat) : bool :=
+  match n, m with
+  | O, O => true
+  | O, S _ => false
+  | S _, O => false
+  | S n', S m' => beq_nat n' m'
+  end.
+
+Compute (beq_nat 3 3).
+Compute (beq_nat 3 4).
+
+Fixpoint leb (n m : nat) : bool :=
+  match n with
+  | O => true
+  | S n' => match m with
+           | O => false
+           | S m' => leb n' m'
+           end
+  end.
+
+Compute (leb 3 2).
+Compute (leb 2 3).
+
+(* Exercise: 1 star (blt_nat) *)
+Definition blt_nat (n m : nat) : bool := andb (leb n m) (negb (beq_nat n m)).
+
+Compute (blt_nat 3 4).
+Compute (blt_nat 4 3).
+Compute (blt_nat 4 4).
+
+Example test_blt_nat1 : (blt_nat 2 2) = false.
+Proof. simpl. reflexivity. Qed.
+
+Example test_blt_nat2 : (blt_nat 2 4) = true.
+Proof. simpl. reflexivity. Qed.
+
+Example test_blt_nat3 : (blt_nat 4 2) = false.
+Proof. simpl. reflexivity. Qed.
+
