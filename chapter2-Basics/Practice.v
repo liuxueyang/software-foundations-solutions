@@ -378,3 +378,16 @@ Proof.
 Theorem plus_1_neq_O : forall n : nat,
     beq_nat (n + 1) 0 = false.
 
+Proof.
+  intros n. destruct n as [| n'].
+  - reflexivity.
+  - reflexivity. Qed.
+
+Theorem negb_involutive : forall b : bool,
+    negb (negb b) = b.
+
+Proof.
+  intros b. destruct b.
+  - reflexivity.
+  - reflexivity. Qed.
+
